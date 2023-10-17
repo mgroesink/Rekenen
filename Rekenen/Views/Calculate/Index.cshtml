@@ -1,0 +1,100 @@
+﻿@model Rekenen.Models.Calculation
+@{
+    Layout = null;
+}
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Rekenen</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Rekenen.styles.css" asp-append-version="true" />
+</head>
+<body style="padding:5%">
+    <img src="~/images/r.jpeg" class="img-fluid" />
+    <h1 style="margin-left:100px;display:inline;font-family:'Comic Sans MS';font-weight:900;color:rebeccapurple">Welkom bij Beter Leren Rekenen</h1>
+
+    <form method="post">
+
+        <input type="hidden" asp-for="Num1" value=@Model.Num1 />
+        <input type="hidden" asp-for="Num2" value=@Model.Num2 />
+        <input type="hidden" asp-for="Operator" value=@Model.Operator />
+
+        <div class="row">
+            <div class="col">
+                <h2>Welk soort sommen wil je maken?</h2>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="category" id="radioPlus" value="Plus" checked>
+                    <label class="form-check-label" for="radioPlus">
+                        Optellen (+)
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="category" id="radioMin" value="Min">
+                    <label class="form-check-label" for="radioMin">
+                        Aftrekken (-)
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="category" id="radioMultiply" value="Keer">
+                    <label class="form-check-label" for="radioMultiply">
+                        Vermenigvuldigen (x)
+                    </label>
+                </div>
+            </div>
+            <div class="col">
+                <h2>Hoe moeilijk mag het worden?</h2>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="level" id="radioSimple" value="Simple" checked>
+                    <label class="form-check-label" for="radioSimple">
+                        Simpel (getallen van 1 tot en met 10)
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="level" id="radioAverage" value="Average">
+                    <label class="form-check-label" for="radioAverage">
+                        Gemiddeld (getallen van 1 tot en met 100)
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="level" id="radioHard" value="Hard">
+                    <label class="form-check-label" for="radioHard">
+                        Moeilijk (getallen van -100 tot en met 100)
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn bg-primary" style="margin:10px;width:25%;color:yellowgreen;font-weight:900;font-size:2.5em" type="submit" name="option" value="Start">Start</button>
+        @if (ViewBag.som != null)
+        {
+            <h2>@ViewBag.som</h2>
+            <input value="@ViewBag.answer" type="number" name="answer" placeholder="Jouw antwoord" style="font-size:36px;font-weight:bold;width:25%" class="form-control-color" />
+            <button class="btn btn-dark" type="submit" name="option" value="Check">Controleer</button>
+        }
+        @if (ViewBag.resultaat != null)
+        {
+            <h2>@Html.Raw(ViewBag.resultaat)</h2>
+            if (ViewBag.resultaat.Contains("Jouw antwoord is goed."))
+            {
+                <div>
+                    <audio autoplay>
+                        <source src="sounds/07018050.wav" />
+
+                    </audio>
+                </div>
+            }
+            else
+            {
+                <div>
+                    <audio autoplay>
+                        <source src="sounds/maybe-next-time.wav" />
+                    </audio>
+                </div>
+            }
+
+        }
+    </form>
+</body>
+</html>
